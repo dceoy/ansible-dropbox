@@ -10,6 +10,8 @@
 - name: Add the GPG key for Dropbox
   when: ansible_distribution == 'Ubuntu'
   become: true
+  environment:
+    https_proxy: "{{ http_proxy if http_proxy is defined else '' }}"
   apt_key:
     id: 1C61A2656FB57B7E4DE0F4C1FC918B335044912E
     keyserver: pgp.mit.edu
@@ -18,6 +20,8 @@
 - name: Add Dropbox repo
   when: ansible_distribution == 'Ubuntu'
   become: true
+  environment:
+    https_proxy: "{{ http_proxy if http_proxy is defined else '' }}"
   apt_repository:
     repo: "deb http://linux.dropbox.com/ubuntu {{ ansible_distribution_release }} main"
     state: present
